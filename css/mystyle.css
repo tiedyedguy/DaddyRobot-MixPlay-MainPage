@@ -1,0 +1,60 @@
+.loading {
+  border-width: 1px;
+}
+.mixplay-table {
+  max-width: 60%;
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+}
+.mixplay {
+  cursor: pointer;
+  margin: 10px;
+}
+.tableholder {
+  display: flex;
+  justify-content: center;
+}
+.tdleft {
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px 0px 1px 1px;
+  border-radius: 4px 0px 0px 4px;
+}
+.tdright {
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px 1px 1px 0px;
+  border-radius: 0px 4px 4px 0px;
+}
+.mixplay:hover .tdleft {
+  border-style: solid;
+  border-color: yellow;
+  border-width: 1px 0px 1px 1px;
+  border-radius: 4px 0px 0px 4px;
+}
+.mixplay:hover .tdright {
+  border-style: solid;
+  border-color: yellow;
+  border-width: 1px 1px 1px 0px;
+  border-radius: 0px 4px 4px 0px;
+}
+
+.mixplay_old {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 80%;
+}
+
+.tdleft:hover {
+  border-style: solid;
+  border-color: yellow;
+  border-width: 1px;
+  border-radius: 2px;
+  z-index: 10;
+}
+
+.mixplaytitle {
+  font-size: 3rem;
+  font-weight: 2;
+}
