@@ -2,7 +2,7 @@
 
 Welcome to the main section for talking about DaddyRobot's MixPlay Experience!
 
-You can find the latest published experience at: https://daddyrobot.live/mixplay
+You can find the latest published experience at: https://daddyrobot.live/mixplays/
 
 
 ### Overall Flow
