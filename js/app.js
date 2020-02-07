@@ -25,6 +25,7 @@ function pickmixplay(mixplay) {
     case "chat-shooter":
     case "social-me":
     case "test-stuff":
+    case "team-viewer":
     case "draw-on-me":
       $("#selectmixplay").hide("slide", { direction: "left" }, 250);
       setTimeout(() => {
@@ -176,6 +177,9 @@ function run(mixplay) {
       break;
     case "test-stuff":
       runTestStuff();
+      break;
+    case "team-viewer":
+      runTeamViewer();
       break;
   }
 }

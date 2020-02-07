@@ -30,6 +30,7 @@
     ></script>
     <meta name="theme-color" content="#563d7c" />
     <link rel="stylesheet" href="./css/cover.css" />
+    <link rel="stylesheet" href="./css/team-viewer.css" />
   </head>
   <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -82,6 +83,16 @@
                     </div>
                   </td>
                 </tr>
+                <tr onclick="pickmixplay('team-viewer')" class="mixplay">
+                  <td class="tdleft"><img src="./images/social-me.png" /></td>
+                  <td class="tdright">
+                    <div class="lead">
+                      <em class="mixplaytitle">Team Viewer MixPlay!</em><br />
+                      Show off a Mixer Team in Style! Pick one then start the
+                      MixPlay!
+                    </div>
+                  </td>
+                </tr>
                 <tr onclick="pickmixplay('chat-shooter')" class="mixplay">
                   <td class="tdleft">
                     <img src="./images/chat-shooter.png" />
@@ -121,6 +132,7 @@
             </table>
           </div>
         </main>
+        <!-- Next section only shows if a mixplay needs a setting before load (currently none do) -->
         <main
           role="main"
           id="mixplaysettings"
@@ -129,10 +141,6 @@
         >
           <h1 class="cover-heading">Pick Initial Settings for the mixplay!</h1>
           <p class="lead"></p>
-          <p class="ms chat-shooter">
-            Chat Shooter has no initial settings, so, uh, just hit next :)
-          </p>
-
           <p class="lead">
             <a
               href="#"
@@ -145,6 +153,7 @@
             >
           </p>
         </main>
+        <!-- This is the section that does the authentication -->
         <main
           role="main"
           id="startingblock"
@@ -165,6 +174,7 @@
             >
           </p>
         </main>
+        <!-- This is the section that shows the control of the mixplay while running and the log file -->
         <main
           role="main"
           id="mixplaycontrols"
@@ -172,12 +182,29 @@
           style="display:none"
         >
           <h1 class="cover-heading">Controls & Logs</h1>
-
-          <p class="lead">
+          <div class="lead">
+            <!-- Chat Shooter Controls -->
             <button class="chat-shooter ms" onclick="chatShooterReset()">
               Reset Scores
             </button>
-          </p>
+            <!-- Team Viewer Controls-->
+            <div class="team-viewer ms">
+              <p>
+                Click on one of your teams or type in a team token (The
+                shortened name like "partners" or "passion"):
+              </p>
+            </div>
+            <div class="team-viewer ms team-viewer-controls">
+              <div id="myteams" class="team-viewer ms team-viewer-imgs"></div>
+              <div>
+                <input type="text" id="team" size="30" />
+                <button onclick="tvSendTeam()">
+                  Show Team!
+                </button>
+              </div>
+            </div>
+            <!-- End of Controls -->
+          </div>
           <div class="lead">
             Any logging data will show below:
             <table id="logtable">
@@ -205,6 +232,7 @@
     <script src="./js/chatshooter.js"></script>
     <script src="./js/draw-on-me.js"></script>
     <script src="./js/social-me.js"></script>
+    <script src="./js/team-viewer.js"></script>
     <script src="./js/test-stuff.js"></script>
   </body>
 </html>
