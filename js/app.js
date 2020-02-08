@@ -1,13 +1,18 @@
+//Get the interactive class
 const client = new interactive.GameClient();
+
+//Set up scopes for all mixplays, doesn't change based on mixplay, maybe it should.
 const scopes =
   "interactive:play interactive:robot:self chat:chat chat:connect chat:whisper";
 const clientid = "1871c44332cf8cf83922f4bd891aff625107a7c2a178239b";
 
+//This data object will hold everything, and I mean it.
 let data = {
   client_id: clientid,
   scope: scopes
 };
 
+//There are a few "main" sections, each of them slide like this one. THis is the first click of Let's go.
 function letsgo() {
   $("#welcome").hide("slide", { direction: "left" }, 250);
   setTimeout(() => {
@@ -17,33 +22,39 @@ function letsgo() {
   }, 500);
 }
 
+//The onclick function of the mixplays.  Basically the switch statement is (Does this mixplay have settings that we need to do before it loads)
 function pickmixplay(mixplay) {
-  data.mixplay = mixplay;
-  $(".ms").hide();
-  $("." + mixplay).show();
-  switch (mixplay) {
-    case "chat-shooter":
-    case "social-me":
-    case "test-stuff":
-    case "team-viewer":
-    case "draw-on-me":
-      $("#selectmixplay").hide("slide", { direction: "left" }, 250);
-      setTimeout(() => {
-        $("#startingblock")
-          .show("slide", { direction: "right" }, 250)
-          .show();
-      }, 500);
-      break;
-    default:
-      $("#selectmixplay").hide("slide", { direction: "left" }, 250);
-      setTimeout(() => {
-        $("#mixplaysettings")
-          .show("slide", { direction: "right" }, 250)
-          .show();
-      }, 500);
+  //This IF statement is to stop propagation if they click on the mixer user name of last used.
+  //It bubbles up to the div that calls this and that was annoying.
+  if (!$(event.target).hasClass("mixeruser")) {
+    data.mixplay = mixplay;
+    $(".ms").hide();
+    $("." + mixplay).show();
+    switch (mixplay) {
+      case "chat-shooter":
+      case "social-me":
+      case "test-stuff":
+      case "team-viewer":
+      case "draw-on-me":
+        $("#selectmixplay").hide("slide", { direction: "left" }, 250);
+        setTimeout(() => {
+          $("#startingblock")
+            .show("slide", { direction: "right" }, 250)
+            .show();
+        }, 500);
+        break;
+      default:
+        $("#selectmixplay").hide("slide", { direction: "left" }, 250);
+        setTimeout(() => {
+          $("#mixplaysettings")
+            .show("slide", { direction: "right" }, 250)
+            .show();
+        }, 500);
+    }
   }
 }
 
+//Clicking back from the inital settings to go back to pick a mixplay.
 function backtomixplaypick() {
   $("#mixplaysettings").hide("slide", { direction: "right" }, 250);
   setTimeout(() => {
@@ -53,6 +64,8 @@ function backtomixplaypick() {
   }, 500);
 }
 
+//Click on back from the authentication to the settings.
+//TODO, make this go back to mixplay if it is a mixplay that doesn't need inital settings
 function backtomixplaysettings() {
   $("#startingblock").hide("slide", { direction: "right" }, 250);
   setTimeout(() => {
@@ -62,6 +75,7 @@ function backtomixplaysettings() {
   }, 500);
 }
 
+//Click on the button to go from intial settings to oauth.
 function oauthtime() {
   $("#mixplaysettings").hide("slide", { direction: "left" }, 250);
   setTimeout(() => {
@@ -71,6 +85,7 @@ function oauthtime() {
   }, 500);
 }
 
+//Starting oauth! oh boy.
 function startOauth() {
   console.log("Starting OAuth");
   $.post("https://mixer.com/api/v1/oauth/shortcode", data, result => {
@@ -86,6 +101,8 @@ function startOauth() {
   });
 }
 
+//After we get the code from mixer we slide to the log page.
+//This is the function that waits until we get a result of the login.
 function waitforgo() {
   $("#startingblock").hide("slide", { direction: "left" }, 250);
   setTimeout(() => {
@@ -122,6 +139,7 @@ function waitforgo() {
     });
 }
 
+//We got the login OK, time to push forward.
 function finalstep() {
   log("getting stuff from mixer, almost ready.");
   // console.log(data);
@@ -152,6 +170,8 @@ function finalstep() {
   );
 }
 
+//Our simple logging function just adds a row to a table.
+//TODO: Probably should not let the table grow forever.
 function log(thing) {
   var d = new Date();
   $("#logtablebody").prepend(
@@ -159,6 +179,8 @@ function log(thing) {
   );
 }
 
+//Two things, 1st send data to my page to keep simple stats.
+//2nd, is run the mixplay specific function that fires it off.
 function run(mixplay) {
   console.log("running mixplay: " + mixplay);
   $.get("https://ask.daddyrobot.live/mixplayed", {
@@ -183,3 +205,22 @@ function run(mixplay) {
       break;
   }
 }
+
+//When the document is ready, let's load in the stats of usage!
+$(document).ready(() => {
+  $.get("https://ask.daddyrobot.live/mixplaycounts", result => {
+    console.log(result);
+    Object.keys(result).forEach(mixplay => {
+      console.log(mixplay);
+      $("#" + mixplay + "-mps").html(
+        "Current Usage: <span class='mps-usage'>" +
+          result[mixplay].last24 +
+          "</span> Latest User: <a class='mixeruser' target='_blank' href='https://mixer.com/" +
+          result[mixplay].latestuser +
+          "'>" +
+          result[mixplay].latestuser +
+          "</a>"
+      );
+    });
+  });
+});

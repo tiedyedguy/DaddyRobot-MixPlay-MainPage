@@ -1,6 +1,5 @@
 <html>
   <head>
-    <link rel="stylesheet" href="./css/mystyle.css" />
     <title>DaddyRobot's MixPlay!</title>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -29,11 +28,11 @@
       crossorigin="anonymous"
     ></script>
     <meta name="theme-color" content="#563d7c" />
-    <link rel="stylesheet" href="./css/cover.css" />
+    <link rel="stylesheet" href="./css/mystyle.css" />
     <link rel="stylesheet" href="./css/team-viewer.css" />
   </head>
   <body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="cover-container">
       <header class="masthead mb-auto">
         <div class="inner">
           <h3 class="masthead-brand">Daddy Robot's MixPlay Fun</h3>
@@ -50,7 +49,7 @@
           </nav>
         </div>
       </header>
-      <div style="display:flex;justify-content: center;">
+      <div class="maincontainer" style="display:flex;justify-content: center;">
         <main role="main" id="welcome" class="inner cover">
           <h1 class="cover-heading">Welcome to Daddy Robot's MixPlay Fun!</h1>
           <p class="lead">
@@ -63,73 +62,59 @@
             >
           </p>
         </main>
-        <main
-          role="main"
-          id="selectmixplay"
-          class="inner cover"
-          style="display:none"
-        >
+        <main role="main" id="selectmixplay" class="" style="display:none">
           <h1 class="cover-heading">Pick a MixPlay Experience</h1>
-          <div class="tableholder">
-            <table class="mixplay-table">
-              <tbody class="mixplaytb">
-                <tr onclick="pickmixplay('social-me')" class="mixplay">
-                  <td class="tdleft"><img src="./images/social-me.png" /></td>
-                  <td class="tdright">
-                    <div class="lead">
-                      <em class="mixplaytitle">Social Me MixPlay!</em><br />
-                      This MixPlay will show all your social links in a bar on
-                      the side!
-                    </div>
-                  </td>
-                </tr>
-                <tr onclick="pickmixplay('team-viewer')" class="mixplay">
-                  <td class="tdleft"><img src="./images/social-me.png" /></td>
-                  <td class="tdright">
-                    <div class="lead">
-                      <em class="mixplaytitle">Team Viewer MixPlay!</em><br />
-                      Show off a Mixer Team in Style! Pick one then start the
-                      MixPlay!
-                    </div>
-                  </td>
-                </tr>
-                <tr onclick="pickmixplay('chat-shooter')" class="mixplay">
-                  <td class="tdleft">
-                    <img src="./images/chat-shooter.png" />
-                  </td>
-                  <td class="tdright">
-                    <div class="lead">
-                      <em class="mixplaytitle">Chat Shooter MixPlay!</em><br />
-                      This mixplay makes all chat messages to your stream appear
-                      on the stream and allows users to click on them for
-                      points. It also has a leaderboard that you can reset at
-                      any time.
-                    </div>
-                  </td>
-                </tr>
-                <tr onclick="pickmixplay('draw-on-me')" class="mixplay">
-                  <td class="tdleft"><img src="./images/draw-on-me.png" /></td>
-                  <td class="tdright">
-                    <div class="lead">
-                      <em class="mixplaytitle">Draw On Me Mixplay!</em><br />
-                      This mixplay puts a drawing canvas over your screen so
-                      your viewers can draw pictures on top of you.
-                    </div>
-                  </td>
-                </tr>
-                <tr onclick="pickmixplay('test-stuff')" class="mixplay">
-                  <td class="tdleft"><img src="./images/test-stuff.png" /></td>
-                  <td class="tdright">
-                    <div class="lead">
-                      <em class="mixplaytitle">Testing Stuff on MixPlay!</em
-                      ><br />
-                      This is just the MixPlay I use to test things. That's it.
-                      No promises to what it does.
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="mixplaygrid">
+            <div class="mixplay" onclick="pickmixplay('social-me')">
+              <img src="./images/social-me.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Social Me MixPlay!</em><br />
+                This MixPlay will show all your social links in a bar on the
+                side!
+                <div class="mixplaystat" id="social-me-mps"></div>
+              </div>
+            </div>
+            <div onclick="pickmixplay('team-viewer')" class="mixplay">
+              <img src="./images/team-viewer.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Team Viewer MixPlay!</em><br />
+                Show off a Mixer Team in Style! Pick one then start the MixPlay!
+                <div class="mixplaystat" id="team-viewer-mps"></div>
+              </div>
+            </div>
+            <div onclick="pickmixplay('chat-shooter')" class="mixplay">
+              <img src="./images/chat-shooter.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Chat Shooter MixPlay!</em><br />
+                This mixplay makes all chat messages to your stream appear on
+                the stream and allows users to click on them for points. It also
+                has a leaderboard that you can reset at any time.
+                <div class="mixplaystat" id="chat-shooter-mps"></div>
+              </div>
+            </div>
+            <div onclick="pickmixplay('draw-on-me')" class="mixplay">
+              <img src="./images/draw-on-me.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Draw On Me Mixplay!</em><br />
+                This mixplay puts a drawing canvas over your screen so your
+                viewers can draw pictures on top of you.
+                <div class="mixplaystat" id="draw-on-me-mps"></div>
+              </div>
+            </div>
+            <div onclick="pickmixplay('test-stuff')" class="mixplay">
+              <img src="./images/test-stuff.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Testing Stuff on MixPlay!</em><br />
+                This is just the MixPlay I use to test things. That's it. No
+                promises to what it does.
+                <div class="mixplaystat" id="test-stuff-mps"></div>
+              </div>
+            </div>
           </div>
         </main>
         <!-- Next section only shows if a mixplay needs a setting before load (currently none do) -->
@@ -213,7 +198,7 @@
           </div>
         </main>
       </div>
-      <footer class="mastfoot mt-auto">
+      <footer class="mastfoot">
         <div class="inner">
           <p>
             Close this site and it will close the MixPlay. Thank you for using
