@@ -36,6 +36,7 @@ function pickmixplay(mixplay) {
       case "test-stuff":
       case "team-viewer":
       case "draw-on-me":
+      case "blockrain":
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
         setTimeout(() => {
           $("#startingblock")
@@ -202,6 +203,9 @@ function run(mixplay) {
       break;
     case "team-viewer":
       runTeamViewer();
+      break;
+    case "blockrain":
+      runBlockRain();
       break;
   }
 }

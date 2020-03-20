@@ -36,6 +36,11 @@ Here are the current experiences and their sources:
 - You can also type in any team's token name (It is a shortened name you see on their URL).
 - This one shows you how to interact with team data on mixer! To see that part, look at the file: https://github.com/tiedyedguy/DaddyRobot-MixPlay-MainPage/blob/master/js/team-viewer.js
 
+### Blockrain: https://github.com/tiedyedguy/DaddyRobot-MixPlay-Blockrain
+
+- Runs Blockrain on your Mixplay: https://aerolab.github.io/blockrain.js/
+- Keeps a high score.
+
 ### Test Stuff: https://github.com/tiedyedguy/DaddyRobot-MixPlay-Test-Stuff
 
 - A place for me to play around with MixPlay stuff, I included it because, why not.

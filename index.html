@@ -65,6 +65,16 @@
         <main role="main" id="selectmixplay" class="" style="display:none">
           <h1 class="cover-heading">Pick a MixPlay Experience</h1>
           <div class="mixplaygrid">
+            <div onclick="pickmixplay('blockrain')" class="mixplay">
+              <img src="./images/blockrain.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Blockrain Mixplay!</em><br />
+                This mixplay let's your viewers play BlockRain on their screen!
+                It even keeps a leaderboard!
+                <div class="mixplaystat" id="blockrain-mps"></div>
+              </div>
+            </div>
             <div class="mixplay" onclick="pickmixplay('social-me')">
               <img src="./images/social-me.png" />
 
@@ -105,6 +115,7 @@
                 <div class="mixplaystat" id="draw-on-me-mps"></div>
               </div>
             </div>
+
             <div onclick="pickmixplay('test-stuff')" class="mixplay">
               <img src="./images/test-stuff.png" />
 
@@ -172,6 +183,9 @@
             <button class="chat-shooter ms" onclick="chatShooterReset()">
               Reset Scores
             </button>
+            <button class="blockrain ms" onclick="brReset()">
+              Reset Scores
+            </button>
             <!-- Team Viewer Controls-->
             <div class="team-viewer ms">
               <p>
@@ -219,5 +233,6 @@
     <script src="./js/social-me.js"></script>
     <script src="./js/team-viewer.js"></script>
     <script src="./js/test-stuff.js"></script>
+    <script src="./js/blockrain.js"></script>
   </body>
 </html>
