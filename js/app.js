@@ -35,6 +35,7 @@ function pickmixplay(mixplay) {
       case "social-me":
       case "test-stuff":
       case "team-viewer":
+      case "closed-captioning":
       case "draw-on-me":
       case "blockrain":
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
@@ -206,6 +207,9 @@ function run(mixplay) {
       break;
     case "blockrain":
       runBlockRain();
+      break;
+    case "closed-captioning":
+      runClosedCaptioning();
       break;
   }
 }

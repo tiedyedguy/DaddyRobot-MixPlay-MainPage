@@ -65,6 +65,16 @@
         <main role="main" id="selectmixplay" class="" style="display:none">
           <h1 class="cover-heading">Pick a MixPlay Experience</h1>
           <div class="mixplaygrid">
+            <div onclick="pickmixplay('closed-captioning')" class="mixplay">
+              <img src="./images/blockrain.png" />
+
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Closed Captioning Mixplay!</em><br />
+                This mixplay gives your stream closed captioning! That's all it
+                does.
+                <div class="mixplaystat" id="closed-captioning-mps"></div>
+              </div>
+            </div>
             <div onclick="pickmixplay('blockrain')" class="mixplay">
               <img src="./images/blockrain.png" />
 
@@ -234,5 +244,6 @@
     <script src="./js/team-viewer.js"></script>
     <script src="./js/test-stuff.js"></script>
     <script src="./js/blockrain.js"></script>
+    <script src="./js/closedcaptioning.js"></script>
   </body>
 </html>
