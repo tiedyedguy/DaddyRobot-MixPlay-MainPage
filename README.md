@@ -16,6 +16,12 @@ After that is passes it off to one of the .js files named for each experience. S
 
 Here are the current experiences and their sources:
 
+### Destiny 2: https://github.com/tiedyedguy/DaddyRobot-MixPlay-Destiny2
+
+- Pulls from the Bungie API for a Destiny2 character and displays them.
+- Based on the official twitch extension for Destiny2.
+- Biggest Backend for a MixPlay with lots of custom JS in the ./js/destiny2.js and ./js/destiny2helper.js
+
 ### Chat Shooter: https://github.com/tiedyedguy/DaddyRobot-MixPlay-Chat-Shooter
 
 - This one reads from the chat and shows the messages on screen. This is a good one for seeing how to look at messages also how to ignore whispers and moderated messages
