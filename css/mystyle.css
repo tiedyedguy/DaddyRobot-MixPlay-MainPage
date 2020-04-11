@@ -108,6 +108,11 @@ body {
   justify-content: center;
   align-content: center;
   align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
 }
 
 /*
@@ -153,6 +158,9 @@ body {
   width: 226px;
 }
 
+#mixplaycontrols {
+  max-height: 80%;
+}
 .mixplayinfo {
   position: relative;
   padding-bottom: 35px;

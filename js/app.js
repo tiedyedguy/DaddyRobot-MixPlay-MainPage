@@ -9,16 +9,14 @@ const clientid = "1871c44332cf8cf83922f4bd891aff625107a7c2a178239b";
 //This data object will hold everything, and I mean it.
 let data = {
   client_id: clientid,
-  scope: scopes
+  scope: scopes,
 };
 
 //There are a few "main" sections, each of them slide like this one. THis is the first click of Let's go.
 function letsgo() {
   $("#welcome").hide("slide", { direction: "left" }, 250);
   setTimeout(() => {
-    $("#selectmixplay")
-      .show("slide", { direction: "right" }, 250)
-      .show();
+    $("#selectmixplay").show("slide", { direction: "right" }, 250).show();
   }, 500);
 }
 
@@ -40,11 +38,11 @@ function pickmixplay(mixplay) {
       case "blockrain":
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
         setTimeout(() => {
-          $("#startingblock")
-            .show("slide", { direction: "right" }, 250)
-            .show();
+          $("#startingblock").show("slide", { direction: "right" }, 250).show();
         }, 500);
         break;
+      case "destiny2":
+        d2_anyDataHere();
       default:
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
         setTimeout(() => {
@@ -60,9 +58,7 @@ function pickmixplay(mixplay) {
 function backtomixplaypick() {
   $("#mixplaysettings").hide("slide", { direction: "right" }, 250);
   setTimeout(() => {
-    $("#selectmixplay")
-      .show("slide", { direction: "left" }, 250)
-      .show();
+    $("#selectmixplay").show("slide", { direction: "left" }, 250).show();
   }, 500);
 }
 
@@ -71,9 +67,7 @@ function backtomixplaypick() {
 function backtomixplaysettings() {
   $("#startingblock").hide("slide", { direction: "right" }, 250);
   setTimeout(() => {
-    $("#mixplaysettings")
-      .show("slide", { direction: "left" }, 250)
-      .show();
+    $("#mixplaysettings").show("slide", { direction: "left" }, 250).show();
   }, 500);
 }
 
@@ -81,16 +75,14 @@ function backtomixplaysettings() {
 function oauthtime() {
   $("#mixplaysettings").hide("slide", { direction: "left" }, 250);
   setTimeout(() => {
-    $("#startingblock")
-      .show("slide", { direction: "right" }, 250)
-      .show();
+    $("#startingblock").show("slide", { direction: "right" }, 250).show();
   }, 500);
 }
 
 //Starting oauth! oh boy.
 function startOauth() {
   console.log("Starting OAuth");
-  $.post("https://mixer.com/api/v1/oauth/shortcode", data, result => {
+  $.post("https://mixer.com/api/v1/oauth/shortcode", data, (result) => {
     data.code = result.code;
     data.handle = result.handle;
     // console.log(result);
@@ -108,9 +100,7 @@ function startOauth() {
 function waitforgo() {
   $("#startingblock").hide("slide", { direction: "left" }, 250);
   setTimeout(() => {
-    $("#mixplaycontrols")
-      .show("slide", { direction: "right" }, 250)
-      .show();
+    $("#mixplaycontrols").show("slide", { direction: "right" }, 250).show();
   }, 500);
 
   log("Waiting for you to login...");
@@ -150,15 +140,15 @@ function finalstep() {
     {
       client_id: clientid,
       code: data.codetwo,
-      grant_type: "authorization_code"
+      grant_type: "authorization_code",
     },
-    result => {
+    (result) => {
       // console.log(result);
       data.access_token = result.access_token;
       $.ajax({
         url: "https://mixer.com/api/v1/users/current",
         headers: { Authorization: "Bearer " + data.access_token },
-        success: result => {
+        success: (result) => {
           console.log(result);
           data.channelID = result.channel.id;
 
@@ -166,7 +156,7 @@ function finalstep() {
           data.userID = result.id;
           data.username = result.username;
           run(data.mixplay);
-        }
+        },
       });
     }
   );
@@ -187,7 +177,7 @@ function run(mixplay) {
   console.log("running mixplay: " + mixplay);
   $.get("https://ask.daddyrobot.live/mixplayed", {
     username: data.username,
-    mixplay: mixplay
+    mixplay: mixplay,
   });
   switch (mixplay) {
     case "chat-shooter":
@@ -211,14 +201,17 @@ function run(mixplay) {
     case "closed-captioning":
       runClosedCaptioning();
       break;
+    case "destiny2":
+      runDestiny2();
+      break;
   }
 }
 
 //When the document is ready, let's load in the stats of usage!
 $(document).ready(() => {
-  $.get("https://ask.daddyrobot.live/mixplaycounts", result => {
+  $.get("https://ask.daddyrobot.live/mixplaycounts", (result) => {
     console.log(result);
-    Object.keys(result).forEach(mixplay => {
+    Object.keys(result).forEach((mixplay) => {
       console.log(mixplay);
       $("#" + mixplay + "-mps").html(
         "Current Usage: <span class='mps-usage'>" +

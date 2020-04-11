@@ -1,9 +1,27 @@
+function d2_anyDataHere() {
+  let mi = localStorage.getItem("d2_mi");
+  $("#d2players").empty();
+  if (mi !== undefined) {
+    $("#d2players").append(
+      "<option>" +
+        localStorage.getItem("d2_mi_displayName") +
+        " - " +
+        localStorage.getItem("d2_mt_name") +
+        " - " +
+        localStorage.getItem("d2_mt") +
+        " - " +
+        localStorage.getItem("d2_mi") +
+        "</option>"
+    );
+  }
+}
+
 function d2SearchForPlayer() {
   $("#d2_loading").show();
   $("#d2players").empty();
   let d2_name = encodeURI($("#d2playerName").val());
   let headers = {
-    "X-API-Key": "c887af950f1147f2812113e513797155",
+    "X-API-Key": "9d59f63aeacf44c5937006b63ee3cc91",
   };
   $.ajax({
     headers: headers,
@@ -12,10 +30,12 @@ function d2SearchForPlayer() {
       d2_name +
       "/",
   }).then((results) => {
-    console.log(results);
+    //console.log(results);
     results.Response.forEach((members) => {
       $("#d2players").append(
         "<option>" +
+          members.displayName +
+          " - " +
           d2_membershipType(members.membershipType) +
           " - " +
           members.membershipType +
@@ -63,7 +83,6 @@ function d2_stat(type) {
       return "Mobility";
     case 4244567218:
       return "Strength";
-
     case 155624089:
       return "Stability";
     case 943549884:
