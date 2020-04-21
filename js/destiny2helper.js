@@ -53,9 +53,11 @@ function d2_itemType(equip) {
     return "SubClass";
   }
   if (equip.Response.itemCategoryHashes.includes(20)) {
+    // console.log(equip.Response.itemCategoryHashes);
     return "Armor";
   }
   if (equip.Response.itemCategoryHashes.includes(1)) {
+    // console.log(equip.Response.itemCategoryHashes);
     return "Weapon";
   }
   if (equip.Response.itemCategoryHashes.includes(39)) {
@@ -65,6 +67,34 @@ function d2_itemType(equip) {
     return "Other";
   }
   return "Crap";
+}
+function d2_itemSubType(equip) {
+  if (equip.Response.itemCategoryHashes.includes(4)) {
+    return 3;
+  }
+  if (equip.Response.itemCategoryHashes.includes(3)) {
+    return 2;
+  }
+  if (equip.Response.itemCategoryHashes.includes(2)) {
+    return 1;
+  }
+  if (equip.Response.itemCategoryHashes.includes(45)) {
+    return 1;
+  }
+  if (equip.Response.itemCategoryHashes.includes(46)) {
+    return 2;
+  }
+  if (equip.Response.itemCategoryHashes.includes(47)) {
+    return 3;
+  }
+  if (equip.Response.itemCategoryHashes.includes(48)) {
+    return 4;
+  }
+  if (equip.Response.itemCategoryHashes.includes(49)) {
+    return 5;
+  }
+
+  return 6;
 }
 
 function d2_stat(type) {
@@ -171,4 +201,87 @@ function d2_membershipType(type) {
     default:
       return type;
   }
+}
+
+function d2_trialInfo(UIO) {
+  let result = { success: false };
+
+  Object.keys(UIO).forEach((key) => {
+    switch (key) {
+      case "1600065451":
+        result.success = true;
+        result.passagetitle = "PASSAGE OF MERCY";
+        result.passageicon =
+          "https://www.bungie.net/common/destiny2_content/icons/8a7944d13890f231f332e95d0f300be9.jpg";
+        result.passagetext = "Forgives one loss per run.";
+        if (UIO[key][0].objectiveHash == 1586211619) {
+          result.wins = UIO[key][0].progress;
+          result.losses = UIO[key][1].progress;
+        } else {
+          result.wins = UIO[key][1].progress;
+          result.losses = UIO[key][0].progress;
+        }
+        break;
+      case "2879309661":
+        result.success = true;
+        result.passagetitle = "PASSAGE OF WEALTH";
+        result.passageicon =
+          "https://www.bungie.net/common/destiny2_content/icons/278e2252c8471a03e3dd9c0c10d7562d.jpg";
+        result.passagetext =
+          "Increased tokens from completing and winning Trials matches.";
+        if (UIO[key][0].objectiveHash == 1586211619) {
+          result.wins = UIO[key][0].progress;
+          result.losses = UIO[key][1].progress;
+        } else {
+          result.wins = UIO[key][1].progress;
+          result.losses = UIO[key][0].progress;
+        }
+        break;
+      case "2001563200":
+        result.success = true;
+        result.passagetitle = "PASSAGE OF WISDOM";
+        result.passageicon =
+          "https://www.bungie.net/common/destiny2_content/icons/0e7e2a192c19b8d5d4dc054950047bc0.jpg";
+        result.passagetext =
+          "Grants bonus XP from Trials wins, scaling with the number of wins on a ticket.";
+        if (UIO[key][0].objectiveHash == 1586211619) {
+          result.wins = UIO[key][0].progress;
+          result.losses = UIO[key][1].progress;
+        } else {
+          result.wins = UIO[key][1].progress;
+          result.losses = UIO[key][0].progress;
+        }
+        break;
+      case "7665310":
+        result.success = true;
+        result.passagetitle = "PASSAGE OF FEROCITY";
+        result.passageicon =
+          "https://www.bungie.net/common/destiny2_content/icons/32af2ae035485b13f65b2ae19fc02e17.jpg";
+        result.passagetext =
+          "With zero losses, your third win grants a bonus win.";
+        if (UIO[key][0].objectiveHash == 1586211619) {
+          result.wins = UIO[key][0].progress;
+          result.losses = UIO[key][1].progress;
+        } else {
+          result.wins = UIO[key][1].progress;
+          result.losses = UIO[key][0].progress;
+        }
+        break;
+      case "1181381245":
+        result.success = true;
+        result.passagetitle = "PASSAGE OF CONFIDENCE";
+        result.passageicon =
+          "https://www.bungie.net/common/destiny2_content/icons/231be9c2ad7155c8aa1d6cd58f63fae3.jpg";
+        result.passagetext = "Grants bonus rewards from Flawless Chest.";
+        if (UIO[key][0].objectiveHash == 1586211619) {
+          result.wins = UIO[key][0].progress;
+          result.losses = UIO[key][1].progress;
+        } else {
+          result.wins = UIO[key][1].progress;
+          result.losses = UIO[key][0].progress;
+        }
+        break;
+    }
+  });
+  return result;
 }

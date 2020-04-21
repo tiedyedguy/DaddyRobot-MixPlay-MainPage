@@ -103,6 +103,7 @@ body {
 
 .maincontainer {
   overflow: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;

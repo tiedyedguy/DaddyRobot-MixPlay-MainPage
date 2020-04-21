@@ -5,8 +5,10 @@ function runDestiny2() {
   log("Starting up Destiny2 MixPlay!");
   client.open({
     authToken: data.access_token,
-    versionId: 460070,
-    sharecode: "kxcid71k",
+    // versionId: 460070, //Live
+    // sharecode: "kxcid71k",  //Live
+    sharecode: "3re2gsyf", //Beta
+    versionId: 462971, //Beta
   });
 
   client.on("open", () => {
@@ -71,7 +73,7 @@ function d2LoadInfo(type = 0) {
 
     case 0:
       let info = $("#d2players").val().split(" - ");
-      console.log(info);
+      //console.log(info);
       mi_displayName = info[0];
       mt_name = info[1];
       mt = info[2];
@@ -141,9 +143,21 @@ function d2LoadInfo(type = 0) {
           mi +
           "/Character/" +
           profile.Response.characters.data[charKey].characterId +
-          "/?components=200,205",
+          "/?components=200,202,205",
       }).then((charData) => {
-        console.log(charData.Response.equipment.data.items);
+        //console.log(charData.Response.equipment.data.items);
+        dataToSend.characters[charKey].trialinfo = d2_trialInfo(
+          charData.Response.progressions.data.uninstancedItemObjectives
+        );
+        // console.log(
+        //   charData.Response.progressions.data.uninstancedItemObjectives
+        // );
+        // console.log(
+        //   d2_trialInfo(
+        //     charData.Response.progressions.data.uninstancedItemObjectives
+        //   )
+        // );
+
         charData.Response.equipment.data.items.forEach((equipment) => {
           $.ajax({
             headers: headers,
@@ -151,12 +165,12 @@ function d2LoadInfo(type = 0) {
               "https://www.bungie.net/Platform/Destiny2/Manifest/DestinyInventoryItemDefinition/" +
               equipment.itemHash,
           }).then((itemHashData) => {
-            console.log(itemHashData.Response.displayProperties.name);
-            console.log(itemHashData);
+            //console.log(itemHashData.Response.displayProperties.name);
+            //console.log(itemHashData);
             let itemType = d2_itemType(itemHashData);
             switch (itemType) {
               case "SubClass":
-                console.log(itemHashData.Response);
+                //  console.log(itemHashData.Response);
                 dataToSend.characters[charKey].subclass =
                   itemHashData.Response.displayProperties.name;
                 dataToSend.characters[charKey].subclassEmblem =
@@ -180,6 +194,7 @@ function d2LoadInfo(type = 0) {
               stats: [],
               perks: [],
               tierType: itemHashData.Response.inventory.tierType,
+              order: d2_itemSubType(itemHashData),
             };
             dataToSend.characters[charKey].equipment[
               equipment.itemInstanceId

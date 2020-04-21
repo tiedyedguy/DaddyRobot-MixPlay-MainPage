@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <title>DaddyRobot's MixPlay!</title>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="theme-color" content="#563d7c" />
+    <link rel="stylesheet" href="./css/mystyle.css" />
+    <link rel="stylesheet" href="./css/team-viewer.css" />
+  </head>
+  <body class="text-center">
+    <div class="cover-container">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">Daddy Robot's MixPlay Fun</h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" href="https://mixer.com/daddyrobot"
+              >DR's Mixer</a
+            >
+            <a class="nav-link" href="https://twitter.com/daddyrobotlive"
+              >DR's Twitter</a
+            >
+            <a class="nav-link" href="https://streamalerts.app"
+              >DR's Shopify App</a
+            >
+          </nav>
+        </div>
+      </header>
+      <div
+        class="maincontainer"
+        style="display: flex; justify-content: center;"
+      >
+        <main role="main" id="welcome" class="inner cover">
+          <h1 class="cover-heading">Welcome to Daddy Robot's MixPlay Fun!</h1>
+          <p class="lead">
+            Pick a MixPlay - Connect To Your Mixer Account - Give New MixPlay
+            Experiences for your Viewers! This version runs one specific mixplay
+            and that's it. Edit ./js/quickapp.js to pick it.
+          </p>
+          <p class="lead">
+            <a href="#" onclick="letsgo()" class="btn btn-lg btn-secondary"
+              >Let's Go!</a
+            >
+          </p>
+        </main>
+
+        <main
+          role="main"
+          id="startingblock"
+          class="inner cover"
+          style="display: none;"
+        >
+          <h1 class="cover-heading">Ready to start the show!</h1>
+
+          <p class="lead">
+            <a
+              href="#"
+              onclick="backtomixplaysettings()"
+              class="btn btn-lg btn-secondary"
+              >Back!</a
+            >
+            <a href="#" onClick="startOauth()" class="btn btn-lg btn-secondary"
+              >Connect & Go!</a
+            >
+          </p>
+        </main>
+        <!-- This is the section that shows the control of the mixplay while running and the log file -->
+        <main
+          role="main"
+          id="mixplaycontrols"
+          class="inner cover"
+          style="display: none;"
+        >
+          <h1 class="cover-heading">Controls & Logs</h1>
+
+          <div class="lead">
+            Any logging data will show below:
+            <table id="logtable">
+              <tbody id="logtablebody"></tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+      <footer class="mastfoot">
+        <div class="inner">
+          <p>
+            Close this site and it will close the MixPlay. Thank you for using
+            this and please let others know about it. This site stores usernames
+            of who ran each mixplay and that is all.<br />
+            <a href="https://github.com/tiedyedguy/DaddyRobot-MixPlay-MainPage"
+              >Also, HERE IS THE SOURCE CODE TO IT ALL!</a
+            >
+          </p>
+        </div>
+      </footer>
+    </div>
+    <script src="./js/interactive.js"></script>
+    <script src="./js/quickapp.js"></script>
+    <script src="./js/quickmixplay.js"></script>
+  </body>
+</html>
