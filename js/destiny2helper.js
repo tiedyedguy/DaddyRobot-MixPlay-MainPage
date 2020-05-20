@@ -21,7 +21,8 @@ function d2SearchForPlayer() {
   $("#d2players").empty();
   let d2_name = encodeURI($("#d2playerName").val());
   let headers = {
-    "X-API-Key": "9d59f63aeacf44c5937006b63ee3cc91",
+    //"X-API-Key": "9d59f63aeacf44c5937006b63ee3cc91", //beta
+    "X-API-Key": "c887af950f1147f2812113e513797155", //live
   };
   $.ajax({
     headers: headers,

@@ -38,7 +38,11 @@ body {
 }
 
 .cover-container {
-  display: grid;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   grid-template-rows: 40px 1fr 80px;
   width: 100%;
 }
@@ -47,7 +51,7 @@ body {
  * Header
  */
 .masthead {
-  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .masthead-brand {
@@ -85,6 +89,15 @@ body {
   }
 }
 
+@media (max-width: 1600px) {
+  .lead {
+    font-size: 0.75rem;
+  }
+  .mixplaytitle {
+    font-size: 1rem;
+  }
+}
+
 /*
  * Cover
  */
@@ -106,14 +119,16 @@ body {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center;
   align-content: center;
-  align-items: center;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  align-items: center; */
   width: fit-content;
+}
+.logging-section {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 }
 
 /*
@@ -123,8 +138,7 @@ body {
   width: 100%;
   text-align: center;
   display: inline-block;
-  position: fixed;
-  bottom: 0;
+
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -171,11 +185,12 @@ body {
   border-color: yellow;
 }
 .mixplaygrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+
   justify-content: center;
   align-items: center;
   align-content: center;
+  flex-wrap: wrap;
 }
 
 .mixplaytitle {
@@ -193,4 +208,10 @@ body {
 
 .mps-usage {
   color: white;
+}
+
+.follow {
+  color: white;
+  background: rgb(0, 111, 217);
+  border-radius: 2px;
 }

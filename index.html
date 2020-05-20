@@ -33,7 +33,7 @@
   </head>
   <body class="text-center">
     <div class="cover-container">
-      <header class="masthead mb-auto">
+      <header class="masthead">
         <div class="inner">
           <h3 class="masthead-brand">Daddy Robot's MixPlay Fun</h3>
           <nav class="nav nav-masthead justify-content-center">
@@ -49,10 +49,7 @@
           </nav>
         </div>
       </header>
-      <div
-        class="maincontainer"
-        style="display: flex; justify-content: center;"
-      >
+      <div class="maincontainer" style="flex-shrink: 2;">
         <main role="main" id="welcome" class="inner cover">
           <h1 class="cover-heading">Welcome to Daddy Robot's MixPlay Fun!</h1>
           <p class="lead">
@@ -68,16 +65,6 @@
         <main role="main" id="selectmixplay" class="" style="display: none;">
           <h1 class="cover-heading">Pick a MixPlay Experience</h1>
           <div class="mixplaygrid">
-            <!-- <div onclick="pickmixplay('closed-captioning')" class="mixplay">
-              <img src="./images/blockrain.png" />
-
-              <div class="lead mixplayinfo">
-                <em class="mixplaytitle">Closed Captioning Mixplay!</em><br />
-                This mixplay gives your stream closed captioning! That's all it
-                does.
-                <div class="mixplaystat" id="closed-captioning-mps"></div>
-              </div>
-            </div> -->
             <div onclick="pickmixplay('destiny2')" class="mixplay">
               <img src="./images/destiny2.png" />
 
@@ -87,6 +74,17 @@
                 stream! Easy & Quick! Created with help from
                 <a href="https://www.mixer.com/JakeParker">@JakeParker!</a>
                 <div class="mixplaystat" id="destiny2-mps"></div>
+              </div>
+            </div>
+            <div onclick="pickmixplay('contest')" class="mixplay">
+              <img src="./images/contest.png" />
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Contest / Giveaway MixPlay!</em><br />
+                This mixplay allows you to run a quick contest/giveaway in your
+                stream using MixPlay and Chat! You can pick how fast it ends and
+                even knock people out one at a time. Your viewers don't need
+                MixPlay to participate!
+                <div class="mixplaystat" id="contest-mps"></div>
               </div>
             </div>
             <div onclick="pickmixplay('blockrain')" class="mixplay">
@@ -219,6 +217,44 @@
           <h1 class="cover-heading">Controls & Logs</h1>
 
           <div class="lead">
+            <!-- Chat Shooter Controls -->
+            <button class="contest ms" onclick="openContest()">
+              Open Contest!
+            </button>
+            <button class="contest ms" onclick="knockOneOutOfContest()">
+              Eliminate a Contestant!
+            </button>
+            <button class="contest ms" onclick="autoFinishContest()">
+              Make the contest auto finish!
+            </button>
+            <button class="contest ms" onclick="stopAutoFinishContest()">
+              Stop auto finish!
+            </button>
+            <button class="chat-shooter ms" onclick="chatShooterReset()">
+              Reset Scores
+            </button>
+            <button class="blockrain ms" onclick="brReset()">
+              Reset Scores
+            </button>
+            <!-- Team Viewer Controls-->
+            <div class="team-viewer ms">
+              <p>
+                Click on one of your teams or type in a team token (The
+                shortened name like "partners" or "passion"):
+              </p>
+            </div>
+            <div class="team-viewer ms team-viewer-controls">
+              <div id="myteams" class="team-viewer ms team-viewer-imgs"></div>
+              <div>
+                <input type="text" id="team" size="30" />
+                <button onclick="tvSendTeam()">
+                  Show Team!
+                </button>
+              </div>
+            </div>
+            <!-- End of Controls -->
+          </div>
+          <div class="lead logging-section">
             Any logging data will show below:
             <table id="logtable">
               <tbody id="logtablebody"></tbody>
@@ -248,7 +284,7 @@
     <script src="./js/team-viewer.js"></script>
     <script src="./js/test-stuff.js"></script>
     <script src="./js/blockrain.js"></script>
-
+    <script src="./js/contest.js"></script>
     <script src="./js/destiny2.js"></script>
     <script src="./js/destiny2helper.js"></script>
   </body>

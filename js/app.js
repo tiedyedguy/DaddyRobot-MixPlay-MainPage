@@ -3,7 +3,7 @@ const client = new interactive.GameClient();
 
 //Set up scopes for all mixplays, doesn't change based on mixplay, maybe it should.
 const scopes =
-  "interactive:play interactive:robot:self chat:chat chat:connect chat:whisper";
+  "interactive:play channel:follow:self interactive:robot:self chat:chat chat:connect chat:whisper";
 const clientid = "1871c44332cf8cf83922f4bd891aff625107a7c2a178239b";
 
 //This data object will hold everything, and I mean it.
@@ -31,10 +31,12 @@ function pickmixplay(mixplay) {
     switch (mixplay) {
       case "chat-shooter":
       case "social-me":
+      case "spark-donate":
       case "test-stuff":
       case "team-viewer":
       case "closed-captioning":
       case "draw-on-me":
+      case "contest":
       case "blockrain":
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
         setTimeout(() => {
@@ -143,7 +145,7 @@ function finalstep() {
       grant_type: "authorization_code",
     },
     (result) => {
-      // console.log(result);
+      console.log(result);
       data.access_token = result.access_token;
       $.ajax({
         url: "https://mixer.com/api/v1/users/current",
@@ -151,9 +153,9 @@ function finalstep() {
         success: (result) => {
           console.log(result);
           data.channelID = result.channel.id;
-
           data.social = result.social;
           data.userID = result.id;
+          checkForFollow();
           data.username = result.username;
           run(data.mixplay);
         },
@@ -204,9 +206,41 @@ function run(mixplay) {
     case "destiny2":
       runDestiny2();
       break;
+    case "contest":
+      runContest();
+      break;
+    case "spark-donate":
+      runSparkDonate();
+      break;
   }
 }
 
+//See if you are following DaddyRobot and if not, say something.
+function checkForFollow() {
+  $.get(
+    "https://mixer.com/api/v1/channels/70637586/relationship?user=" +
+      data.userID,
+    (result) => {
+      if (result.status.follows === null) {
+        log(
+          "<span id='followspan'>If you like this site, why not give DaddyRobot a <button class='follow' onclick='followDR()'>follow?</button></span>"
+        );
+      }
+    }
+  );
+}
+
+function followDR() {
+  $.ajax({
+    method: "POST",
+    data: "{user: " + data.userID + "}",
+    url: "https://mixer.com/api/v1/channels/70637586/follow",
+    headers: { Authorization: "Bearer " + data.access_token },
+    success: (result) => {
+      $("#followspan").text("THANK YOU!");
+    },
+  });
+}
 //When the document is ready, let's load in the stats of usage!
 $(document).ready(() => {
   $.get("https://ask.daddyrobot.live/mixplaycounts", (result) => {

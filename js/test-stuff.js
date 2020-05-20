@@ -4,7 +4,7 @@ function runTestStuff() {
   client.open({
     authToken: data.access_token,
     versionId: 446666,
-    sharecode: "joc27jkf"
+    sharecode: "joc27jkf",
   });
 
   client.on("open", () => {
@@ -15,16 +15,22 @@ function runTestStuff() {
       .then(() => tsgoLive());
   });
 
-  client.on("message", data => {
+  client.on("message", (data) => {
     // log(data);
   });
 
-  client.state.on("participantJoin", participant => {
+  client.state.on("participantJoin", (participant) => {
     // console.log(participant);
     log(participant.username + " joined the mixplay!");
   });
 }
 
 function tsgoLive() {
+  client.state.getControl("donate").on("mousedown", (clickEvent) => {
+    console.log(clickEvent);
+    client.captureTransaction(clickEvent.transactionID).then(() => {
+      console.log("Yummy sparks");
+    });
+  });
   client.ready();
 }

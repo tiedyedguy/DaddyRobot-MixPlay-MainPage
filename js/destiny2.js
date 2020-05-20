@@ -5,10 +5,10 @@ function runDestiny2() {
   log("Starting up Destiny2 MixPlay!");
   client.open({
     authToken: data.access_token,
-    // versionId: 460070, //Live
-    // sharecode: "kxcid71k",  //Live
-    sharecode: "3re2gsyf", //Beta
-    versionId: 462971, //Beta
+    versionId: 460070, //Live
+    sharecode: "kxcid71k", //Live
+    // sharecode: "3re2gsyf", //Beta
+    // versionId: 462971, //Beta
   });
 
   client.on("open", () => {
@@ -90,7 +90,8 @@ function d2LoadInfo(type = 0) {
   dataToSend = {};
 
   let headers = {
-    "X-API-Key": "9d59f63aeacf44c5937006b63ee3cc91",
+    //"X-API-Key": "9d59f63aeacf44c5937006b63ee3cc91", //beta
+    "X-API-Key": "c887af950f1147f2812113e513797155", //live
   };
 
   dataToSend.mt = d2_membershipType(mt);
