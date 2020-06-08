@@ -215,3 +215,17 @@ body {
   background: rgb(0, 111, 217);
   border-radius: 2px;
 }
+
+.rememberedname {
+  font-weight: bold;
+}
+
+#remembered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-fit-content {
+  width: fit-content;
+}

@@ -1,5 +1,7 @@
 //Get the interactive class
 const client = new interactive.GameClient();
+var useSavedData = false;
+var skipInitialSettings = false;
 
 //Set up scopes for all mixplays, doesn't change based on mixplay, maybe it should.
 const scopes =
@@ -18,6 +20,54 @@ function letsgo() {
   setTimeout(() => {
     $("#selectmixplay").show("slide", { direction: "right" }, 250).show();
   }, 500);
+  checkForSavedLogin();
+}
+
+//Checking to see if they have saved their login before!
+function checkForSavedLogin() {
+  console.log("Looking for saved data");
+  let savedData = window.localStorage.getItem("dr_data");
+  if (savedData !== null) {
+    $(".rememberme").hide();
+    data = JSON.parse(savedData);
+    useSavedData = true;
+    $("#myname").text(data.username);
+    console.log(data.token_expires);
+    console.log(Date.now());
+    if (data.token_expires < Date.now()) {
+      refreshToken();
+    }
+  } else {
+    $("#rememberd").hide();
+  }
+  console.log(savedData);
+}
+
+//Forget the saved login info
+function ForgetMe() {
+  window.localStorage.removeItem("dr_data");
+  useSavedData = false;
+  $(".rememberme").show();
+  $("#rememberd").hide();
+}
+
+//Update AccessToken if expired by refreshToken
+function refreshToken() {
+  console.log("Refreshing the token");
+  $.post("https://mixer.com/api/v1/oauth/token", {
+    client_id: clientid,
+    refresh_token: data.refresh_token,
+    grant_type: "refresh_token",
+  })
+    .done((result) => {
+      console.log(result);
+      data.access_token = result.access_token;
+      data.refresh_token = result.refresh_token;
+      data.token_expires = Date.now() + 20599000;
+    })
+    .fail((error) => {
+      ForgetMe();
+    });
 }
 
 //The onclick function of the mixplays.  Basically the switch statement is (Does this mixplay have settings that we need to do before it loads)
@@ -33,17 +83,21 @@ function pickmixplay(mixplay) {
       case "social-me":
       case "spark-donate":
       case "test-stuff":
+      case "overlay":
+      case "spark-dump":
       case "team-viewer":
       case "closed-captioning":
       case "draw-on-me":
       case "contest":
       case "blockrain":
+        skipInitialSettings = true;
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
         setTimeout(() => {
           $("#startingblock").show("slide", { direction: "right" }, 250).show();
         }, 500);
         break;
       case "destiny2":
+        skipInitialSettings = false;
         d2_anyDataHere();
       default:
         $("#selectmixplay").hide("slide", { direction: "left" }, 250);
@@ -67,10 +121,17 @@ function backtomixplaypick() {
 //Click on back from the authentication to the settings.
 //TODO, make this go back to mixplay if it is a mixplay that doesn't need inital settings
 function backtomixplaysettings() {
-  $("#startingblock").hide("slide", { direction: "right" }, 250);
-  setTimeout(() => {
-    $("#mixplaysettings").show("slide", { direction: "left" }, 250).show();
-  }, 500);
+  if (!skipInitialSettings) {
+    $("#startingblock").hide("slide", { direction: "right" }, 250);
+    setTimeout(() => {
+      $("#mixplaysettings").show("slide", { direction: "left" }, 250).show();
+    }, 500);
+  } else {
+    $("#startingblock").hide("slide", { direction: "right" }, 250);
+    setTimeout(() => {
+      $("#selectmixplay").show("slide", { direction: "left" }, 250).show();
+    }, 500);
+  }
 }
 
 //Click on the button to go from intial settings to oauth.
@@ -84,27 +145,30 @@ function oauthtime() {
 //Starting oauth! oh boy.
 function startOauth() {
   console.log("Starting OAuth");
-  $.post("https://mixer.com/api/v1/oauth/shortcode", data, (result) => {
-    data.code = result.code;
-    data.handle = result.handle;
-    // console.log(result);
-    window.open(
-      "https://mixer.com/go?code=" + data.code,
-      "popup",
-      "width=575,height=650"
-    );
-    waitforgo();
-  });
+  if (useSavedData) {
+    getUserInfo();
+  } else {
+    $.post("https://mixer.com/api/v1/oauth/shortcode", data, (result) => {
+      data.code = result.code;
+      data.handle = result.handle;
+      // console.log(result);
+      window.open(
+        "https://mixer.com/go?code=" + data.code,
+        "popup",
+        "width=575,height=650"
+      );
+      waitforgo();
+    });
+  }
+  $("#startingblock").hide("slide", { direction: "left" }, 250);
+  setTimeout(() => {
+    $("#mixplaycontrols").show("slide", { direction: "right" }, 250).show();
+  }, 500);
 }
 
 //After we get the code from mixer we slide to the log page.
 //This is the function that waits until we get a result of the login.
 function waitforgo() {
-  $("#startingblock").hide("slide", { direction: "left" }, 250);
-  setTimeout(() => {
-    $("#mixplaycontrols").show("slide", { direction: "right" }, 250).show();
-  }, 500);
-
   log("Waiting for you to login...");
   $.ajax("https://mixer.com/api/v1/oauth/shortcode/check/" + data.handle)
     .done((result, statusText, xhr) => {
@@ -147,21 +211,34 @@ function finalstep() {
     (result) => {
       console.log(result);
       data.access_token = result.access_token;
-      $.ajax({
-        url: "https://mixer.com/api/v1/users/current",
-        headers: { Authorization: "Bearer " + data.access_token },
-        success: (result) => {
-          console.log(result);
-          data.channelID = result.channel.id;
-          data.social = result.social;
-          data.userID = result.id;
-          checkForFollow();
-          data.username = result.username;
-          run(data.mixplay);
-        },
-      });
+      data.refresh_token = result.refresh_token;
+      data.token_expires = Date.now() + 20599000;
+
+      getUserInfo();
     }
   );
+}
+
+function getUserInfo() {
+  $.ajax({
+    url: "https://mixer.com/api/v1/users/current",
+    headers: { Authorization: "Bearer " + data.access_token },
+    success: (result) => {
+      console.log(result);
+      data.channelID = result.channel.id;
+      data.social = result.social;
+      data.userID = result.id;
+      checkForFollow();
+      data.username = result.username;
+      if ($("#rememberme").prop("checked") || useSavedData) {
+        console.log("Remembering user");
+        window.localStorage.setItem("dr_data", JSON.stringify(data));
+      } else {
+        window.localStorage.removeItem("dr_data");
+      }
+      run(data.mixplay);
+    },
+  });
 }
 
 //Our simple logging function just adds a row to a table.
@@ -209,8 +286,11 @@ function run(mixplay) {
     case "contest":
       runContest();
       break;
-    case "spark-donate":
-      runSparkDonate();
+    case "overlay":
+      runOverlay();
+      break;
+    case "spark-dump":
+      runSparkDump();
       break;
   }
 }

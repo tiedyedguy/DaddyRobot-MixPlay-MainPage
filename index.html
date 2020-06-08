@@ -76,6 +76,16 @@
                 <div class="mixplaystat" id="destiny2-mps"></div>
               </div>
             </div>
+            <div onclick="pickmixplay('spark-dump')" class="mixplay">
+              <img src="./images/spark-dump.png" />
+              <div class="lead mixplayinfo">
+                <em class="mixplaytitle">Spark Dump MixPlay!</em><br />
+                Allow your users to dump as many sparks as they want on your
+                stream! It comes with some fun effects for everyone when someone
+                does the dump.
+                <div class="mixplaystat" id="spark-dump-mps"></div>
+              </div>
+            </div>
             <div onclick="pickmixplay('contest')" class="mixplay">
               <img src="./images/contest.png" />
               <div class="lead mixplayinfo">
@@ -194,7 +204,30 @@
           style="display: none;"
         >
           <h1 class="cover-heading">Ready to start the show!</h1>
-
+          <div class="lead">
+            <div id="rememberingstuff"></div>
+            <div
+              id="rememberd"
+              
+            >
+              <div>
+                You are currently logged in as
+                <span class="rememberedname" id="myname"></span>.
+              </div>
+              <button
+                
+                class="btn btn-lg btn-secondary btn-fit-content"
+                onclick="ForgetMe()"
+              >
+                Forget My Info
+              </button>
+            </div>
+            <input type="checkbox" class="rememberme" id="rememberme" />
+            <label class="rememberme" for="rememberme"
+              >Remember my login?</label
+            >
+            <br />
+          </div>
           <p class="lead">
             <a
               href="#"
@@ -283,6 +316,7 @@
     <script src="./js/social-me.js"></script>
     <script src="./js/team-viewer.js"></script>
     <script src="./js/test-stuff.js"></script>
+    <script src="./js/spark-dump.js"></script>
     <script src="./js/blockrain.js"></script>
     <script src="./js/contest.js"></script>
     <script src="./js/destiny2.js"></script>
